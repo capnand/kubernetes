@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment-app2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-deployment-app2
+  template:
+    metadata:
+      labels:
+        app: nginx-deployment-app2
+    spec:
+      containers:
+        - name: app2
+          image: capnandan/nginx:app2
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-deployment-app2-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: nginx-deployment-app2
+  ports:
+    - port: 80
+      targetPort: 80
